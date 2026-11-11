@@ -1,0 +1,98 @@
+{
+  "entities": {
+    "Expense": {
+      "title": "Expense",
+      "description": "Catatan pengeluaran keuangan harian pengguna",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "ID pengguna Firebase Auth pemilik catatan pengeluaran"
+        },
+        "date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "description": "Tanggal pengeluaran dalam format YYYY-MM-DD"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Nominal pengeluaran dalam Rupiah, bernilai lebih dari 0"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Keterangan atau rincian pengeluaran"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["makanan", "transportasi", "kebutuhan", "pendidikan", "operasional", "lainnya"],
+          "description": "Kategori pengeluaran"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu server pembuatan data"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu server pengubahan data terakhir"
+        }
+      },
+      "required": ["userId", "date", "amount", "description", "category", "createdAt", "updatedAt"]
+    },
+    "Income": {
+      "title": "Income",
+      "description": "Catatan pemasukan keuangan pengguna",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "ID pengguna Firebase Auth pemilik catatan pemasukan"
+        },
+        "date": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          "description": "Tanggal pemasukan dalam format YYYY-MM-DD"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Nominal pemasukan dalam Rupiah, bernilai lebih dari 0"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200,
+          "description": "Keterangan atau sumber pemasukan"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["gaji", "bisnis", "investasi", "hadiah", "freelance", "lainnya"],
+          "description": "Kategori pemasukan"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu server pembuatan data"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Waktu server pengubahan data terakhir"
+        }
+      },
+      "required": ["userId", "date", "amount", "description", "category", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/expenses/{expenseId}": {
+      "schema": "Expense",
+      "description": "Koleksi data transaksi pengeluaran harian milik setiap pengguna terotentikasi"
+    },
+    "/incomes/{incomeId}": {
+      "schema": "Income",
+      "description": "Koleksi data transaksi pemasukan milik setiap pengguna terotentikasi"
+    }
+  }
+}
